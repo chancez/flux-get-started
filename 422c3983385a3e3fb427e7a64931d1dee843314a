@@ -1,0 +1,1 @@
+{"jobID":"4356d831-e89d-6485-f094-8fb5f84d0906","spec":{"type":"policy","cause":{"Message":"","User":"Chance Zibolski \u003cczibolski@rigetti.com\u003e"},"spec":{"demo:helmrelease/redis":{"add":{"automated":"true"},"remove":{}}}},"result":null}
