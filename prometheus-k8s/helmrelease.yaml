@@ -50,3 +50,8 @@ spec:
           url: http://loki.loki:3100
           jsonData:
             maxLines: 2000
+
+    kubeEtcd:
+      service:
+        port: 2381
+        targetPort: 2381
