@@ -26,11 +26,9 @@ spec:
         additionalSpec: |
           nodePort: 31002
 
-    # Configure security for Consul Connect pod injection
+    # Disable consul connect
     connectInject:
-      enabled: true
-      default: true
-      aclBindingRuleSelector: “serviceaccount.name!=default”
+      enabled: false
 
     client:
       enabled: true
