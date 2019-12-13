@@ -43,17 +43,6 @@ spec:
         enabled: true
         maxUnavailable: 0
 
-    # Prevent Consul servers from co-location on Kubernetes nodes.
-    affinity: |
-      podAntiAffinity:
-       requiredDuringSchedulingIgnoredDuringExecution:
-         - labelSelector:
-             matchLabels:
-               app: {{ template "consul.name" . }}
-               release: "{{ .Release.Name }}"
-               component: server
-         topologyKey: kubernetes.io/hostname
-
     # The catalog sync feature allows Consul to discover services deployed in Kubernetes, without an operator creating Consul registration files.
     syncCatalog:
       enabled: true
