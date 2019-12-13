@@ -17,6 +17,13 @@ spec:
       service:
         type: NodePort
         nodePort: 32005
+      prometheusSpec:
+        # Default behavior configures the serviceMonitor selector for
+        # prometheus-operator to match the serviceMonitors created as part of
+        # the prometheus-operator chart. This allows setting the selector to
+        # {}, ie: match all serviceMonitors.
+        serviceMonitorSelectorNilUsesHelmValues: false
+
     alertmanager:
       service:
         type: NodePort
@@ -43,11 +50,3 @@ spec:
           url: http://loki.loki:3100
           jsonData:
             maxLines: 2000
-
-    prometheus:
-      prometheusSpec:
-        # Default behavior configures the serviceMonitor selector for
-        # prometheus-operator to match the serviceMonitors created as part of
-        # the prometheus-operator chart. This allows setting the selector to
-        # {}, ie: match all serviceMonitors.
-        serviceMonitorSelectorNilUsesHelmValues: false
