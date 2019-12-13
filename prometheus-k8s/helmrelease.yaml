@@ -6,6 +6,8 @@ metadata:
   namespace: prometheus
   annotations:
     fluxcd.io/automated: "false"
+    fluxcd.io/locked: 'true'
+    fluxcd.io/locked_user: Chance Zibolski <czibolski@rigetti.com>
 spec:
   releaseName: prometheus-k8s
   chart:
@@ -44,12 +46,12 @@ spec:
         nodePort: 32007
 
       additionalDataSources:
-        - name: Loki
-          type: loki
-          access: proxy
-          url: http://loki.loki:3100
-          jsonData:
-            maxLines: 2000
+      - name: Loki
+        type: loki
+        access: proxy
+        url: http://loki.loki:3100
+        jsonData:
+          maxLines: 2000
 
     kubeEtcd:
       service:
