@@ -18,7 +18,7 @@ spec:
       datacenter: minidc
       dns:
         enabled: true
-        clusterIP: 10.97.53.53
+        clusterIP: 10.96.53.53
 
     # Enable the Consul Web UI via a NodePort
     ui:
