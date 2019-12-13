@@ -44,12 +44,17 @@ spec:
         nodePort: 32007
 
       additionalDataSources:
-      - name: Loki
+      - name: Loki Logs
         type: loki
         access: proxy
         url: http://loki.loki:3100
         jsonData:
           maxLines: 2000
+
+      - name: Loki Log Metrics
+        type: prometheus
+        access: proxy
+        url: http://loki.loki/loki:3100
 
     kubeEtcd:
       service:
