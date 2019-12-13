@@ -1,0 +1,1 @@
+{"jobID":"17d3dd6b-2e0d-2c03-e9f2-44582710bffc","spec":{"type":"policy","cause":{"Message":"","User":"Chance Zibolski \u003cczibolski@rigetti.com\u003e"},"spec":{"prometheus:helmrelease/prometheus-k8s":{"add":{"locked":"true","locked_msg":"","locked_user":"Chance Zibolski \u003cczibolski@rigetti.com\u003e"},"remove":{}}}},"result":null}
