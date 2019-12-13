@@ -15,10 +15,14 @@ spec:
   values:
     loki:
       enabled: true
+
       service:
         type: NodePort
         port: 3100
         nodePort: 32004
+
+      serviceMonitor:
+        enabled: true
 
       replicas: 3
 
