@@ -1,0 +1,43 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: fluentd
+  namespace: fluentd
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  releaseName: fluentd
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: fluentd
+    version: 2.3.2
+  values:
+  image:
+    # repository: registry.gitlab.com/rigetti/infrastructure/fluentd
+    # tag: latest
+
+    # for log buffers
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 10Gi
+
+    configmaps:
+      output.conf: |
+        <match **>
+          @type stdout
+          # <buffer>
+          #   @type file
+          #   path /var/log/fluentd-buffers/kubernetes.system.buffer
+          #   flush_mode interval
+          #   retry_type exponential_backoff
+          #   flush_thread_count 2
+          #   flush_interval 5s
+          #   retry_forever
+          #   retry_max_interval 30
+          #   chunk_limit_size "#{ENV['OUTPUT_BUFFER_CHUNK_LIMIT']}"
+          #   queue_limit_length "#{ENV['OUTPUT_BUFFER_QUEUE_LIMIT']}"
+          #   overflow_action block
+          # </buffer>
+        </match>
