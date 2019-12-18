@@ -2,12 +2,12 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: fluentd
+  name: fluentd-aggregator
   namespace: fluentd
   annotations:
     fluxcd.io/automated: "false"
 spec:
-  releaseName: fluentd
+  releaseName: fluentd-aggregator
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: fluentd
