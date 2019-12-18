@@ -1,0 +1,1 @@
+{"jobID":"9eee6f78-4efe-3335-9f48-80b0a508f8a0","spec":{"type":"policy","cause":{"Message":"","User":"Chance Zibolski \u003cczibolski@rigetti.com\u003e"},"spec":{"fluentd:helmrelease/fluentd-aggregator":{"add":{"locked":"true","locked_msg":"","locked_user":"Chance Zibolski \u003cczibolski@rigetti.com\u003e"},"remove":{}}}},"result":null}
