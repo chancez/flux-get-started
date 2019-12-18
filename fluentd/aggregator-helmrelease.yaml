@@ -6,8 +6,6 @@ metadata:
   namespace: fluentd
   annotations:
     fluxcd.io/automated: "false"
-    fluxcd.io/locked_user: Chance Zibolski <czibolski@rigetti.com>
-    fluxcd.io/locked: 'true'
 spec:
   releaseName: fluentd-aggregator
   chart:
