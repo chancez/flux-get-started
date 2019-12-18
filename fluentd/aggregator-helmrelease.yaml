@@ -13,10 +13,6 @@ spec:
     name: fluentd
     version: 2.3.2
   values:
-  image:
-    # repository: registry.gitlab.com/rigetti/infrastructure/fluentd
-    # tag: latest
-
     # for log buffers
     persistence:
       enabled: true
