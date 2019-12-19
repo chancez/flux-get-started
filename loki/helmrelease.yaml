@@ -24,7 +24,7 @@ spec:
       serviceMonitor:
         enabled: true
 
-      replicas: 3
+      replicas: 1
 
       env:
         - name: AWS_ACCESS_KEY_ID
