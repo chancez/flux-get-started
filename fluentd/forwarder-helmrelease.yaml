@@ -6,19 +6,16 @@ metadata:
   namespace: fluentd
   annotations:
     fluxcd.io/automated: "false"
+    fluxcd.io/ignore: "true"
 spec:
   releaseName: fluent-bit
   chart:
+    # git: git@github.com:chancez/charts.git
+    # ref: fluent_bit_require_ack_response
+    # path: stable/fluent-bit
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: fluent-bit
     version: 2.8.3
   values:
     on_minikube: true
-    backend:
-      type: forward
-      forward:
-        host: fluentd-aggregator
-        port: 24224
-    input:
-      systemd:
-        enabled: true
+    existingConfigMap: fluent-bit-config

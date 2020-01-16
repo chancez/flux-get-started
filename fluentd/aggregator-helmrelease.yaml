@@ -6,6 +6,7 @@ metadata:
   namespace: fluentd
   annotations:
     fluxcd.io/automated: "false"
+    fluxcd.io/ignore: "true"
 spec:
   releaseName: fluentd-aggregator
   chart:
@@ -13,14 +14,123 @@ spec:
     name: fluentd
     version: 2.3.2
   values:
+    image:
+      repository: quay.io/ecnahc515/fluentd
+      tag: loki-improved
+      # repository: registry.gitlab.com/rigetti/infrastructure/fluentd
+      # tag: latest
+      # pullSecrets:
+      #   - fluentd-pull-secret
+      pullPolicy: Always
+
     # for log buffers
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
       size: 10Gi
 
-    configmaps:
+    service:
+      type: ClusterIP
+      ports:
+        - name: "monitor-agent"
+          protocol: TCP
+          containerPort: 24220
+        - name: "forward-input"
+          protocol: TCP
+          containerPort: 24224
+
+    metrics:
+      enabled: true
+      service:
+        port: 24231
+      serviceMonitor:
+        enabled: true
+
+    extraEnvVars:
+      # our custom fluentd image's default fluent.conf does an @include on the
+      # fluentd config file from $FLUENTD_BASE_CONF
+      - name: FLUENTD_BASE_CONF
+        value: /etc/fluent/config.d/base.conf
+
+    configMaps:
+      # simply includes other configs
+      base.conf: |
+         @include /etc/fluent/config.d/system.conf
+         @include /etc/fluent/config.d/general.conf
+         @include /etc/fluent/config.d/forward-input.conf
+         @include /etc/fluent/config.d/output.conf
+
+      forward-input.conf: |
+        <source>
+          @type forward
+          port 24224
+          bind 0.0.0.0
+          send_keepalive_packet true
+        </source>
+
       output.conf: |
-        <match **>
+        <match fluent.**>
           @type null
+        </match>
+
+        # count number of incoming records per tag
+        <filter **>
+          @type prometheus
+          <metric>
+            name fluentd_input_status_num_records_total
+            type counter
+            desc The total number of incoming records
+            <labels>
+              tag ${tag}
+              hostname ${hostname}
+            </labels>
+          </metric>
+        </filter>
+
+        # We need to tag records with the worker_id since Loki doesn't support
+        # out of order inserts
+        # https://github.com/grafana/loki/blob/65ba42a6e7dc975d6f25b15fc6f9b8d72446b3e2/docs/clients/fluentd.md#multi-worker-usage
+        <filter **>
+            @type record_transformer
+            <record>
+                fluentd_worker "#{worker_id}"
+            </record>
+        </filter>
+
+
+        # count number of outgoing records per tag
+        <match kube.**>
+          @type copy
+          <store>
+            @type loki
+            url "http://loki.loki:3100"
+            extra_labels {"env":"dev"}
+
+            <label>
+              fluentd_worker
+              container $.kubernetes.container_name
+              namespace $.kubernetes.namespace_name
+              pod $.kubernetes.pod_name
+            </label>
+
+            <buffer time, tag, $.kubernetes.container_name, $.kubernetes.namespace_name, $.kubernetes.pod_name, fluentd_worker>
+              timekey 30
+              timekey_wait 120
+              chunk_limit_size 60MB
+              overflow_action block
+            </buffer>
+
+          </store>
+          <store>
+            @type prometheus
+            <metric>
+              name fluentd_output_status_num_records_total
+              type counter
+              desc The total number of outgoing records
+              <labels>
+                tag ${tag}
+                hostname ${hostname}
+              </labels>
+            </metric>
+          </store>
         </match>
