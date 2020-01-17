@@ -1,0 +1,5 @@
+version: 1  # must be `1`
+patchUpdated:
+  generators:
+    - command: ./jsonnet-flux.sh
+  patchFile: flux-patch.yaml

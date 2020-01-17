@@ -1,0 +1,11 @@
+{
+  "apiVersion": "tanka.dev/v1alpha1",
+  "kind": "Environment",
+  "metadata": {
+    "name": "loki"
+  },
+  "spec": {
+    "apiServer": "https://192.168.99.128:8443",
+    "namespace": "loki"
+  }
+}
