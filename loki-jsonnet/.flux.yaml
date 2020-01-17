@@ -19,7 +19,7 @@ commandUpdated:
            spec:
              containers:
              - name: sleep
-               image: gcr.io/google-containers/pause:3.1
+               image: gcr.io/google-containers/pause:3.1"
   updaters:
     - containerImage:
         command: echo uci $FLUX_WORKLOAD
