@@ -1,3 +1,4 @@
+
 ---
 version: 1
 commandUpdated:
@@ -8,14 +9,14 @@ commandUpdated:
         kind: Namespace
         metadata:
           labels:
-            name: test-ns1
-          name: test-ns1
+            name: test-ns3
+          name: test-ns3
         ---
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           name: helloworld
-          namespace: test-ns1
+          namespace: test-ns3
         spec:
           selector:
             matchLabels:
