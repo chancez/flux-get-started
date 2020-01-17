@@ -7,6 +7,7 @@ commandUpdated:
        kind: Deployment
        metadata:
          name: helloworld
+         namespace: default
        spec:
          selector:
            matchLabels:
@@ -17,8 +18,8 @@ commandUpdated:
               name: helloworld
            spec:
              containers:
-             - name: greeter
-               image: quay.io/weaveworks/helloworld:master-a000001"
+             - name: sleep
+               image: gcr.io/google-containers/pause:3.1
   updaters:
     - containerImage:
         command: echo uci $FLUX_WORKLOAD
