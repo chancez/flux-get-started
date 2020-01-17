@@ -5,4 +5,4 @@ if ! test -f "/usr/local/bin/tk"; then
     chmod +x /usr/local/bin/tk
 fi
 
-tk show logging/environments/loki
+tk show logging/environments/loki > flux-patch.yaml
