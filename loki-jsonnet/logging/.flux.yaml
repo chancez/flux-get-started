@@ -1,6 +1,23 @@
 ---
 version: 1
-patchUpdated:
+commandUpdated:
   generators:
-    - command: 'echo "hello world"'
-  patchFile: flux-patch.yaml
+    - command: |
+       echo "apiVersion: extensions/v1beta1
+       kind: Deployment
+       metadata:
+         name: helloworld
+       spec:
+         template:
+           metadata:
+             labels:
+              name: helloworld
+           spec:
+             containers:
+             - name: greeter
+               image: quay.io/weaveworks/helloworld:master-a000001"
+  updaters:
+    - containerImage:
+        command: echo uci $FLUX_WORKLOAD
+      policy:
+        command: echo ua $FLUX_WORKLOAD
