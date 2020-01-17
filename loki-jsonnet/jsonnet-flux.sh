@@ -7,4 +7,4 @@ if ! test -f "/usr/local/bin/tk"; then
     chmod +x /usr/local/bin/tk
 fi
 
-tk show --dangerous-allow-redirect environments/loki
+tk show --dangerous-allow-redirect logging/environments/loki

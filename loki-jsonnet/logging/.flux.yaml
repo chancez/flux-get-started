@@ -1,5 +1,6 @@
-version: 1  # must be `1`
+---
+version: 1
 patchUpdated:
   generators:
-    - command: ./jsonnet-flux.sh
+    - command: /loki-jsonnet/jsonnet-flux.sh
   patchFile: flux-patch.yaml
